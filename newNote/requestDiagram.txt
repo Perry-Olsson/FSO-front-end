@@ -1,0 +1,16 @@
+1: User clicks save button;
+2: Browser makes an HTTP POST request to server 
+@https://fullstack-exampleapp.herokuapp.com/new_note carrying user entered note;
+2.5: Server adds new note to notes array;
+3: Server responds with 302 found and asks the browser to redirect to /notes URL;
+4: Browser makes HTTP GET request to server @https://fullstack-exampleapp.herokuapp.com/notes;
+5: Server responds with HTML-code;
+6: Browser makes HTTP GET request to server @https://fullstack-exampleapp.herokuapp.com/main.css;
+7: Server responds with CSS file main.css;
+8: Browser makes HTTP GET request to server @https://fullstack-exampleapp.herokuapp.com/main.js;
+9: Server responds with JS file main.js;
+9.5: Browser starts to execute main.js;
+10: Main.js asks browser to make HTTP GET request @https://fullstack-exampleapp.herokuapp.com/data.json;
+11: Server responds with JSON data containing the notes array;
+11.5: Browser executes event handler in main.js which appends all the notes to the DOM;
+ 
