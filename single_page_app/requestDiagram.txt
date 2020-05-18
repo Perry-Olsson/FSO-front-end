@@ -1,0 +1,15 @@
+1: Browser makes HTTP GET request to server @https://fullstack-exampleapp.herokuapp.com/spa;
+2: Server responds with HTML file;
+2.1: Browser begins parsing HTML file;
+3: Browser makes HTTP GET request to server @https://fullstack-exampleapp.herokuapp.com/main.css;
+4: Server responds with CSS file main.css;
+5: Browser makes HTTP GET request to server @https://fullstack-exampleapp.herokuapp.com/spa.js;
+6: Server responds with JS file spa.js;
+6.1: Browser begins executing spa.js;
+7: Browser makes HTTP GET request to server @https://fullstack-exampleapp.herokuapp.com/data.json;
+8: Server responds with JSON string containing notes to be rendered;
+9.1: Browser receives JSON string triggering an event handler in spa.js;
+9.2: event handler calls redrawNotes function appending the notes to the DOM;
+
+
+
