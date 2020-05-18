@@ -1,0 +1,10 @@
+1: user submits new note;
+1.1: onsubmit event handler triggered in spa.js;
+1.2: user entered value is added to the local notes array and rerendered to the DOM locally;
+2: Browser makes HTTP POST request @https://fullstack-exampleapp.herokuapp.com/new_note_spa
+containing the new note data;
+2.1: Server adds new note to its notes array to reflect the changes;
+3: Server responds with 201 created and a JSON string reiterating that;
+3.1: Browser receives JSON string triggering an event handler in spa.js that console logs
+the JSON string;
+
