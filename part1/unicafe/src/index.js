@@ -8,20 +8,34 @@ const Button = ({ name, handleClick }) => (
   </button>
 );
 
-const DisplayFeedback = ({ stat, value }) => (
-  <p>
-    {stat} {value}
-  </p>
+const Statistic = ({ stat, value }) => (
+  <tr>
+    <td>{stat}</td>
+    <td>
+      {value}
+      {stat === "positive" && "%"}
+    </td>
+  </tr>
 );
 
-const DisplayStats = ({ stats }) => {
-  const totalFeedback = stats.reduce((acc, value) => acc + value, 0);
-  return (
+const Statistics = ({ stats }) => {
+  const totalFeedback = stats["good"] + stats["neutral"] + stats["bad"];
+  return totalFeedback ? (
     <>
-      <p>all {totalFeedback}</p>
-      <p>average {(stats[0] - stats[2]) / totalFeedback || 0}</p>
-      <p>positive {stats[0] / totalFeedback || 0}%</p>
+      <Statistic stat="good" value={stats["good"]} />
+      <Statistic stat="neutral" value={stats["neutral"]} />
+      <Statistic stat="bad" value={stats["bad"]} />
+      <Statistic stat="all" value={totalFeedback} />
+      <Statistic
+        stat="average"
+        value={(stats["good"] - stats["bad"]) / totalFeedback || 0}
+      />
+      <Statistic stat="positive" value={(stats["good"] / totalFeedback) * 100 || 0} />
     </>
+  ) : (
+    <tr>
+      <td>No feedback given</td>
+    </tr>
   );
 };
 
@@ -30,6 +44,12 @@ const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+
+  const stats = {
+    good: good,
+    neutral: neutral,
+    bad: bad,
+  };
 
   const handleClick = (state, setState) => () => setState(state + 1);
 
@@ -40,10 +60,11 @@ const App = () => {
       <Button handleClick={handleClick(neutral, setNeutral)} name={"neutral"} />
       <Button handleClick={handleClick(bad, setBad)} name={"bad"} />
       <h2>Statistics</h2>
-      <DisplayFeedback stat="good" value={good} />
-      <DisplayFeedback stat="neutral" value={neutral} />
-      <DisplayFeedback stat="bad" value={bad} />
-      <DisplayStats stats={[good, neutral, bad]} />
+      <table>
+        <tbody>
+          <Statistics stats={stats} />
+        </tbody>
+      </table>
     </div>
   );
 };
