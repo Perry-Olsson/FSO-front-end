@@ -1,21 +1,30 @@
-const formParser = (newNumber, newName, persons) => {
+const formParser = (newNumber, newName, persons, updatePerson) => {
   const formInfo = {
     formatOk: true,
     error: "",
-    alert: "",
+    handleError: "",
     name: "",
     number: "",
   };
   if (newNumber.match(/[^\d-()]/gm) !== null) {
     formInfo.formatOk = false;
-    formInfo.alert = "Number must contain only characters 0-9()-";
+    formInfo.handleError = () =>
+      alert("Number must contain only characters 0-9()-");
     formInfo.error = "number";
     return formInfo;
   }
   persons.forEach((person) => {
     if (person.name.toLowerCase() === newName.toLowerCase()) {
       formInfo.formatOk = false;
-      formInfo.alert = `${newName} is already in the phonebook`;
+      formInfo.handleError = () => {
+        const confirmation = window.confirm(
+          `${newName} is already in the phonebook, would you like to replace the old number?`
+        );
+        if (confirmation) {
+          const newPerson = { ...person, number: newNumber };
+          updatePerson(person.id, newPerson);
+        }
+      };
       formInfo.error = "name";
       return formInfo;
     }
@@ -23,7 +32,8 @@ const formParser = (newNumber, newName, persons) => {
       person.number.replace(/[()-]/gm, "") === newNumber.replace(/[()-]/gm, "")
     ) {
       formInfo.formatOk = false;
-      formInfo.alert = `${newNumber} is already in the phonebook`;
+      formInfo.handleError = () =>
+        alert(`${newNumber} is already in the phonebook`);
       formInfo.error = "number";
       return formInfo;
     }
