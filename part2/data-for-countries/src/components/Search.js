@@ -1,9 +1,12 @@
 import React from "react";
 
-const Search = ({ search, setSearch }) => (
+const Search = ({ search, handleSearchChange }) => (
   <div>
     <b>Search Countries: </b>
-    <input value={search} onChange={(event) => setSearch(event.target.value)} />
+    <input
+      value={search}
+      onChange={(event) => handleSearchChange(event.target.value)}
+    />
   </div>
 );
 

@@ -1,7 +1,13 @@
 import React from "react";
 import Country from "./Country";
 
-const Countries = ({ countries, search }) => (
+const Countries = ({
+  countries,
+  search,
+  weather,
+  setWeather,
+  setDisplayCountry,
+}) => (
   <>
     {countries.length === 1 && <h1>{countries[0].name}</h1>}
     {countries.length < 11 ? (
@@ -9,7 +15,10 @@ const Countries = ({ countries, search }) => (
         <Country
           key={country.name}
           country={country}
-          matches={countries.length}
+          weather={weather}
+          setWeather={setWeather}
+          display={countries.length === 1 ? true : false}
+          setDisplayCountry={setDisplayCountry}
         />
       ))
     ) : search !== "" ? (
