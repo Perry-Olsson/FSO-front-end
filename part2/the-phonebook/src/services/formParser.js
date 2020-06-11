@@ -8,8 +8,15 @@ const formParser = (newNumber, newName, persons, updatePerson) => {
   };
   if (newNumber.match(/[^\d-()]/gm) !== null) {
     formInfo.formatOk = false;
-    formInfo.handleError = () =>
-      alert("Number must contain only characters 0-9()-");
+    formInfo.handleError = (setNotification) => {
+      setNotification({
+        message: "Number must only contain characters 0-9()-",
+        type: "error",
+      });
+      setTimeout(() => {
+        setNotification({ message: null, type: "success" });
+      }, 10000);
+    };
     formInfo.error = "number";
     return formInfo;
   }
@@ -32,8 +39,16 @@ const formParser = (newNumber, newName, persons, updatePerson) => {
       person.number.replace(/[()-]/gm, "") === newNumber.replace(/[()-]/gm, "")
     ) {
       formInfo.formatOk = false;
-      formInfo.handleError = () =>
-        alert(`${newNumber} is already in the phonebook`);
+      formInfo.handleError = (setNotification) => {
+        setNotification({
+          messgae: `${newNumber} is already in the phonebook`,
+          type: "error",
+        });
+        setTimeout(
+          () => setNotification({ message: null, type: "success" }),
+          5000
+        );
+      };
       formInfo.error = "number";
       return formInfo;
     }
