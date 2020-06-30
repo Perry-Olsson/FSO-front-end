@@ -6,7 +6,7 @@ import Notification from "./notification/Notification";
 import formParser from "../services/formParser";
 import phonebookService from "../services/phonebookService";
 import filterPeople from "../services/filtration";
-import axios from "axios";
+
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -19,11 +19,8 @@ const App = () => {
   });
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then((res) => setPersons(res.data));
+    phonebookService.getAll().then(res => setPersons(res))
   }, []);
-
   const updatePerson = (id, newPerson) => {
     phonebookService
       .updatePerson(id, newPerson)
