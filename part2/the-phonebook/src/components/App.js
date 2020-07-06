@@ -21,6 +21,7 @@ const App = () => {
   useEffect(() => {
     phonebookService.getAll().then(res => setPersons(res))
   }, []);
+
   const updatePerson = (id, newPerson) => {
     phonebookService
       .updatePerson(id, newPerson)
@@ -55,7 +56,6 @@ const App = () => {
     const formInfo = formParser(newNumber, newName, persons, updatePerson);
     if (formInfo.formatOk) {
       const newPerson = {
-        id: persons[persons.length - 1].id + 1,
         name: formInfo.name,
         number: formInfo.number,
       };
