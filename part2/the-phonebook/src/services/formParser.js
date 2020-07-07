@@ -41,7 +41,7 @@ const formParser = (newNumber, newName, persons, updatePerson) => {
       formInfo.formatOk = false;
       formInfo.handleError = (setNotification) => {
         setNotification({
-          messgae: `${newNumber} is already in the phonebook`,
+          message: `${newNumber} is already in the phonebook`,
           type: "error",
         });
         setTimeout(
