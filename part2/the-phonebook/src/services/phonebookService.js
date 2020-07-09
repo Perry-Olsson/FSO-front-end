@@ -17,7 +17,7 @@ const createPerson = async (newPerson) => {
 const updatePerson = async (id, newPerson) => {
   const request = axios.put(`${baseUrl}/${id}`, newPerson);
   const res = await request;
-  return res.data;
+  return res.data
 };
 
 const deletePerson = async (id) => {

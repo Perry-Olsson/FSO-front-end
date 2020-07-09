@@ -6,6 +6,7 @@ import Notification from "./notification/Notification";
 import formParser from "../services/formParser";
 import phonebookService from "../services/phonebookService";
 import filterPeople from "../services/filtration";
+import notify from "../services/notify"
 
 
 const App = () => {
@@ -28,26 +29,15 @@ const App = () => {
       .then((res) => {
         setPersons(persons.map((person) => (person.id !== id ? person : res)));
         setNewNumber("");
-        setNotification({
-          ...notification,
-          message: `Updated ${newPerson.name}`,
-        });
-        setTimeout(
-          () => setNotification({ ...notification, message: null }),
-          5000
-        );
+        notify(setNotification, {type: 'success', message: `Updated ${res.name}`})
       })
-      .catch(() => {
-        setPersons(persons.filter((person) => person.id !== id));
+      .catch((error) => {
+        if (error.response.data.type=== 'notFound')
+          setPersons(persons.filter(person => person.id !== id))
         setNewNumber("");
-        setNotification({
-          message: `${newPerson.name}'s information was not found on the server`,
-          type: "error",
-        });
-        setTimeout(
-          () => setNotification({ type: "success", message: null }),
-          5000
-        );
+        notify(setNotification, {
+          message: error.response.data.error,
+          type: "error",})
       });
   };
 
@@ -64,14 +54,10 @@ const App = () => {
         setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewNumber("");
-        setNotification({
-          ...notification,
-          message: `Added ${returnedPerson.name}`,
-        });
-        setTimeout(
-          () => setNotification({ ...notification, message: null }),
-          5000
-        );
+        notify(setNotification, {type: 'success', message: `Added ${returnedPerson.name}`})
+      })
+      .catch(err => {
+        notify(setNotification, {message: err.response.data.error, type: 'error'})
       });
     } else {
       formInfo.error === "number" ? setNewNumber("") : setNewName("");
@@ -86,20 +72,10 @@ const App = () => {
         .deletePerson(id)
         .then(() => {
           setPersons(persons.filter((person) => person.id !== id));
-          setNotification({ ...notification, message: `Deleted ${name}` });
-          setTimeout(() => {
-            setNotification({ ...notification, message: null });
-          }, 5000);
+          notify(setNotification, {type: 'success', message: `Deleted ${name}`})
         })
-        .catch(() => {
-          setNotification({
-            message: `${name} has already been deleted`,
-            type: "error",
-          });
-          setTimeout(
-            () => setNotification({ type: "success", message: null }),
-            5000
-          );
+        .catch((err) => {
+          notify(setNotification, {message: err.message, type: 'error'})
         });
     }
   };
