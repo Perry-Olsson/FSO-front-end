@@ -1,0 +1,13 @@
+.user-ops {
+    border: 3px solid;
+    border-radius: 5px;
+    width: 20%;
+}
+
+.success {
+    color: green;
+}
+
+.failure {
+    color: red;
+}
