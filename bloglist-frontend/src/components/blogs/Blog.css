@@ -1,7 +1,30 @@
 .blog {
     margin-bottom: 2rem;
-    padding: 0 1rem 1rem 1rem;
+    padding: 1rem;
     border: 2px solid; 
     border-radius: 5px;
     width: 20%;
+}
+
+.delete {
+    color: white;
+    font-weight: bold;
+    border: 2px solid red;
+    border-radius: 5px;
+    background-color: red;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.view {
+    height: 100%;
+    width: 3rem;
+    padding: 0;
+    margin: 0;
+    border: solid 2px;
+    border-radius: 4px;
 }

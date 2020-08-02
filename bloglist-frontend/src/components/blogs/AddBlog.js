@@ -1,32 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './AddBlog.css'
 
-const AddBlog = ({ info, handleNewBlog }) => (
-    <form className='flex-column margin-bottom' onSubmit={handleNewBlog}>
+const AddBlog = ({ createBlog }) => {
+    const [title, setTitle] = useState('')
+    const [author, setAuthor] = useState('')
+    const [url, setUrl] = useState('')
+
+    const addBlog = async (event) => {
+        event.preventDefault()
+        const newBlog = { title, author, url }
+        setTitle('')
+        setAuthor('')
+        setUrl('')
+        createBlog(newBlog)
+}
+
+    return  (
+    <form className='flex-column margin-bottom' onSubmit={addBlog}>
             <h2>Add New Blog</h2>
             <label>title: </label>
             <input
                 type='text'
                 name='Title'
-                value={info.title}
-                onChange={({ target }) => info.setTitle(target.value)}
+                value={title}
+                onChange={({ target }) => setTitle(target.value)}
             />
             <label>author: </label>
             <input 
                 type='text'
                 name='Author'
-                value={info.author}
-                onChange={({ target }) => info.setAuthor(target.value)}
+                value={author}
+                onChange={({ target }) => setAuthor(target.value)}
             />
             <label>url: </label>
             <input 
                 type='text'
                 name='url'
-                value={info.url}
-                onChange={({ target }) => info.setUrl(target.value)}
+                value={url}
+                onChange={({ target }) => setUrl(target.value)}
             />
-            <button type='submit' style={{'marginTop': '1rem'}}>Create</button>
+            <button type='submit' style={{'marginTop': '1rem'}}>create</button>
     </form>
-)
+)}
+
 
 export default AddBlog
