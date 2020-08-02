@@ -1,9 +1,14 @@
 import React, {useState} from 'react'
 import './Blog.css'
-const Blog = ({ blog, deleteBlog, id }) => {
+const Blog = ({ blog, deleteBlog, likeBlog }) => {
   const [show, setShow] = useState(false)
   const buttonHeight = { height: show ? '6rem' : ''}
   const buttonLabel = show ? 'hide' : 'view'
+
+  const like = () => {
+    blog.likes++
+    likeBlog({ ...blog, user: blog.user.id })
+  }
 
   return (
   <div className='blog flex'>
@@ -12,8 +17,9 @@ const Blog = ({ blog, deleteBlog, id }) => {
     {show && (
       <>
       <p><b>Author: </b>{blog.author}</p> 
+      <p><b>Likes: </b>{blog.likes}<button className='likes' onClick={like}>like</button></p>
       <p><b>Url: </b>{blog.url}</p>
-      <button className='delete' onClick={() => deleteBlog(id)}>Delete</button>
+      <button className='delete' onClick={() => deleteBlog(blog.id)}>Delete</button>
       </>
     )
     }

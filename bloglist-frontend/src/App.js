@@ -62,6 +62,17 @@ const App = () => {
     }
   }
 
+  const handleLikeBlog = async (blog) => {
+    try {
+      await blogService.updateBlog(blog)
+      setBlogs(blogs.map(b =>  b.id === blog.id ? blog : b))
+    } catch(exception) {
+      exception.response ? handleNotification('failure', exception.response.data.error)
+      : console.log(exception)
+    }
+    
+  }
+
   const handleDeleteBlog = async (id) => {
     try {
       await blogService.deleteBlog(id)
@@ -95,7 +106,7 @@ const App = () => {
        </Togglable>
       <hr className='margin-bottom'/>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} id={blog.id} deleteBlog={handleDeleteBlog} />
+        <Blog key={blog.id} blog={blog} deleteBlog={handleDeleteBlog} likeBlog={handleLikeBlog} />
       )}
     </div>
   ) :

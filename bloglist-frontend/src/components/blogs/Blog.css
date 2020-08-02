@@ -28,3 +28,8 @@
     border: solid 2px;
     border-radius: 4px;
 }
+
+.likes {
+    width: fit-content;
+    margin-left: 0.5rem;
+}
