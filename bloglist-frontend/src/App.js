@@ -4,6 +4,7 @@ import Blog from './components/blogs/Blog'
 import AddBlog from './components/blogs/AddBlog'
 import Togglable from './components/Togglable'
 import Notification from './components/notifacations/notification'
+import blogHelper from './utils/blogHelper'
 import loginService from './services/login'
 import blogService from './services/blogs'
 import './App.css'
@@ -13,13 +14,13 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  
+
   const [notification, setNotification] = useState({ display: false, type: 'success', message: null })
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+      setBlogs( blogHelper.mapAndSortBlogs(blogs) )
+    )
   }, [])
 
   useEffect(() => {
@@ -53,24 +54,27 @@ const App = () => {
   const handleAddBlog = async (newBlog) => {
     try {
       const addedBlog = await blogService.addBlog(newBlog)
-      setBlogs([...blogs, addedBlog])
+      const updatedBlogs = blogHelper.mapAndSortBlogs([...blogs, addedBlog])
+      setBlogs(updatedBlogs)
       handleNotification('success', `${addedBlog.title} by ${addedBlog.author} added`)
       addBlogRef.current.toggleVisibility()
     } catch (exception) {
       exception.response ? handleNotification('failure', exception.response.data.error)
-      : console.log(exception)
+        : console.log(exception)
     }
   }
 
   const handleLikeBlog = async (blog) => {
     try {
-      await blogService.updateBlog(blog)
-      setBlogs(blogs.map(b =>  b.id === blog.id ? blog : b))
+      const response = await blogService.updateBlog({ ...blog, user: blog.user.id })
+      const updatedBlogs = blogHelper.mapAndSortBlogs(blogs, response.data.id)
+      // setBlogs(blogHelper.sortBlogs(blogs.map(b =>  b.id === response.data.id ? blog : b)))
+      setBlogs(updatedBlogs)
     } catch(exception) {
       exception.response ? handleNotification('failure', exception.response.data.error)
-      : console.log(exception)
+        : console.log(exception)
     }
-    
+
   }
 
   const handleDeleteBlog = async (id) => {
@@ -88,7 +92,7 @@ const App = () => {
     setTimeout(() => setNotification({ display: false, message: null }), 5000)
   }
 
-  const handleLogout = (event) => {
+  const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
   }
@@ -99,30 +103,36 @@ const App = () => {
       {notification.display && <Notification type={ notification.type } message={ notification.message } />}
       <h4>{user.username} logged in</h4>
       <button className='logout' onClick={handleLogout}>logout</button>
-      <Togglable ref={addBlogRef}>
-        <AddBlog 
-        createBlog={handleAddBlog}
+      <Togglable buttonLabel='New blog' ref={addBlogRef}>
+        <AddBlog
+          createBlog={handleAddBlog}
         />
-       </Togglable>
+      </Togglable>
       <hr className='margin-bottom'/>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} deleteBlog={handleDeleteBlog} likeBlog={handleLikeBlog} />
+        <Blog
+          key={blog.id}
+          blog={blog}
+          user={user.username}
+          deleteBlog={handleDeleteBlog}
+          likeBlog={handleLikeBlog}
+        />
       )}
     </div>
   ) :
-  ( 
-    <div>
-    <h1>Login</h1>
-    {notification.display && <Notification type={ notification.type } message={ notification.message } />}
-      <Login 
-      username={username}
-      setUsername={setUsername}
-      password={password}
-      setPassword={setPassword}
-      handleLogin={handleLogin}
-      />
-    </div>
-  )
+    (
+      <div>
+        <h1>Login</h1>
+        {notification.display && <Notification type={ notification.type } message={ notification.message } />}
+        <Login
+          username={username}
+          setUsername={setUsername}
+          password={password}
+          setPassword={setPassword}
+          handleLogin={handleLogin}
+        />
+      </div>
+    )
 }
 
 export default App
