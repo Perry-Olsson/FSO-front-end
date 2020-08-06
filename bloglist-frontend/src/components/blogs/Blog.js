@@ -22,13 +22,12 @@ const Blog = ({
 
   return (
     <div className='blog flex'>
-      <div>
-        <p style={{ 'fontSize': '1.5rem' }}><b>{blog.title}</b></p>
+      <div className='blogInfoTest'>
+        <p style={{ 'fontSize': '1.5rem' }}><b>{blog.title} | {blog.author}</b></p>
         {show && (
           <>
-            <p><b>Author: </b>{blog.author}</p>
-            <p><b>Likes: </b>{blog.likes}<button className='likes' onClick={like}>like</button></p>
-            <p><b>Url: </b>{blog.url}</p>
+            <p className='likesTest'><b>Likes: </b>{blog.likes}<button className='likes' onClick={like}>like</button></p>
+            <p className='urlTest'><b>Url: </b>{blog.url}</p>
             {user === blog.user.username &&
       <button className='delete' onClick={confirmDeletion}>Delete</button>
             }

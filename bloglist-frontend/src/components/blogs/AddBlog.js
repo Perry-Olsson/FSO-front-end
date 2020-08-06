@@ -16,10 +16,11 @@ const AddBlog = ({ createBlog }) => {
   }
 
   return  (
-    <form className='flex-column margin-bottom' onSubmit={addBlog}>
+    <form id='addBlogForm'className='flex-column margin-bottom' onSubmit={addBlog}>
       <h2>Add New Blog</h2>
       <label>title: </label>
       <input
+        id='title'
         type='text'
         name='Title'
         value={title}
@@ -27,6 +28,7 @@ const AddBlog = ({ createBlog }) => {
       />
       <label>author: </label>
       <input
+        id='author'
         type='text'
         name='Author'
         value={author}
@@ -34,6 +36,7 @@ const AddBlog = ({ createBlog }) => {
       />
       <label>url: </label>
       <input
+        id='url'
         type='text'
         name='url'
         value={url}
