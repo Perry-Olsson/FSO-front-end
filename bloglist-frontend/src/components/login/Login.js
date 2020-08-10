@@ -4,6 +4,7 @@ import './Login.css'
 
 const Login = ({ username, setUsername, password, setPassword, handleLogin }) => (
   <div>
+    <h1>Login</h1>
     <form onSubmit={handleLogin}>
       <div>
         <label>username</label>

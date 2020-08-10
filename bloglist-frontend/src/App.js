@@ -97,42 +97,47 @@ const App = () => {
     setUser(null)
   }
 
-  return user ? (
+  return (
     <div>
       <h1>Blogs</h1>
       {notification.display && <Notification type={ notification.type } message={ notification.message } />}
-      <h4>{user.username} logged in</h4>
-      <button className='logout' onClick={handleLogout}>logout</button>
-      <Togglable buttonLabel='New blog' ref={addBlogRef}>
-        <AddBlog
-          createBlog={handleAddBlog}
-        />
-      </Togglable>
+
+      {user ?
+        (
+          <>
+            <h4>{user.username} logged in</h4>
+            <button className='logout' onClick={handleLogout}>logout</button>
+            <Togglable buttonLabel='New blog' ref={addBlogRef}>
+              <AddBlog
+                createBlog={handleAddBlog}
+              />
+            </Togglable>
+          </>
+        ) :
+        (
+          <Togglable buttonLabel='Log in'>
+            <Login
+              username={username}
+              setUsername={setUsername}
+              password={password}
+              setPassword={setPassword}
+              handleLogin={handleLogin}
+            />
+          </Togglable>
+        )
+      }
       <hr className='margin-bottom'/>
       {blogs.map(blog =>
         <Blog
           key={blog.id}
           blog={blog}
-          user={user.username}
+          user={user ? user.username : ''}
           deleteBlog={handleDeleteBlog}
           likeBlog={handleLikeBlog}
         />
       )}
     </div>
-  ) :
-    (
-      <div>
-        <h1>Login</h1>
-        {notification.display && <Notification type={ notification.type } message={ notification.message } />}
-        <Login
-          username={username}
-          setUsername={setUsername}
-          password={password}
-          setPassword={setPassword}
-          handleLogin={handleLogin}
-        />
-      </div>
-    )
+  )
 }
 
 export default App
