@@ -27,12 +27,12 @@ const Blog = ({
         {show && (
           <>
             <p className='likesTest'><b>Likes: </b>{blog.likes}<button className='likes' onClick={like}>like</button></p>
-            <p className='urlTest'><b>Url: </b>{blog.url}</p>
+            <p className='urlTest blogUrl'><b>Url: </b>{blog.url}</p>
             {user === blog.user.username &&
       <button className='delete' onClick={confirmDeletion}>Delete</button>
             }
           </>
-        )
+        ) 
         }
       </div>
       <div style={buttonHeight}>

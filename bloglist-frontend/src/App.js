@@ -18,8 +18,10 @@ const App = () => {
   const [notification, setNotification] = useState({ display: false, type: 'success', message: null })
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogHelper.mapAndSortBlogs(blogs) )
+    blogService.getAll().then(blogs => {
+      if (blogs.length > 0 )
+        setBlogs( blogHelper.mapAndSortBlogs(blogs) )
+    }
     )
   }, [])
 
@@ -127,7 +129,7 @@ const App = () => {
         )
       }
       <hr className='margin-bottom'/>
-      {blogs.map(blog =>
+      {blogs && blogs.map(blog =>
         <Blog
           key={blog.id}
           blog={blog}
