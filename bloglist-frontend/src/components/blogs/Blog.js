@@ -21,7 +21,7 @@ const Blog = ({
   }
 
   return (
-    <div className='blog flex'>
+    <div className={`blog flex ${blog.title.replace(/ /gm, '-')}`}>
       <div className='blogInfoTest'>
         <p style={{ 'fontSize': '1.5rem' }}><b>{blog.title} | {blog.author}</b></p>
         {show && (
@@ -32,7 +32,7 @@ const Blog = ({
       <button className='delete' onClick={confirmDeletion}>Delete</button>
             }
           </>
-        ) 
+        )
         }
       </div>
       <div style={buttonHeight}>

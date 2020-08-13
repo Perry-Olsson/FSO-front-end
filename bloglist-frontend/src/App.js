@@ -70,7 +70,6 @@ const App = () => {
     try {
       const response = await blogService.updateBlog({ ...blog, user: blog.user.id })
       const updatedBlogs = blogHelper.mapAndSortBlogs(blogs, response.data.id)
-      // setBlogs(blogHelper.sortBlogs(blogs.map(b =>  b.id === response.data.id ? blog : b)))
       setBlogs(updatedBlogs)
     } catch(exception) {
       exception.response ? handleNotification('failure', exception.response.data.error)
@@ -109,7 +108,7 @@ const App = () => {
           <>
             <h4>{user.username} logged in</h4>
             <button className='logout' onClick={handleLogout}>logout</button>
-            <Togglable buttonLabel='New blog' ref={addBlogRef}>
+            <Togglable buttonLabel='New blog' visible={false} ref={addBlogRef}>
               <AddBlog
                 createBlog={handleAddBlog}
               />
@@ -117,7 +116,7 @@ const App = () => {
           </>
         ) :
         (
-          <Togglable buttonLabel='Log in'>
+          <Togglable buttonLabel='Log in' visible={true}>
             <Login
               username={username}
               setUsername={setUsername}
@@ -129,7 +128,8 @@ const App = () => {
         )
       }
       <hr className='margin-bottom'/>
-      {blogs && blogs.map(blog =>
+      {blogs &&
+        blogs.map(blog =>
         <Blog
           key={blog.id}
           blog={blog}
