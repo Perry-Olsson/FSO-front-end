@@ -46,24 +46,42 @@ describe('Blog app', function() {
       cy.contains('new blog title | new blog author')
     })
 
-    it('user can like a blog', function() {
+    it('User can like a blog', function() {
       cy.get('.test-title').get('.view').click()
       cy.get('.test-title').get('.likes').click()
       cy.get('.test-title').get('.likesTest').contains('1')
     })
 
-    it('user can delete added blogs', function() {
+    it('User can delete added blogs', function() {
       cy.get('.test-title').get('.view').click()
       cy.get('.test-title').contains('Delete').click()
       cy.get('html').should('not.contain', 'test title')
     })
 
-    it.only('User cannot delete blogs they did not add', function() {
+    it('User cannot delete blogs they did not add', function() {
       cy.contains('logout').click()
       cy.createUser({ username: 'deletionTestUsername', name: 'deletionTestName', password: 'deletionTestPassword' })
       cy.login({ username: 'deletionTestUsername', password: 'deletionTestPassword' })
       cy.get('.test-title').get('.view').click()
       cy.get('.test-title').get('.delete').should('not.exist')
+    })
+
+    it('Blogs are sorted via likes', function() {
+      cy.addTestBlogs()
+      let isSorted = true
+      cy.get('.blog')
+        .then(blogList => {
+          for (let i = 0; i < blogList.length; i++) {
+            cy.wrap(blogList[i]).contains('view').click()
+          }
+        })
+      cy.get('.likesSelector').then(likes => {
+        for (let i = 1; i < likes.length; i++) {
+          if (parseInt(likes[i].innerText) > parseInt(likes[i - 1].innerText))
+            isSorted = false
+        }
+        expect(isSorted).to.equal(true)
+      })
     })
   })
 })

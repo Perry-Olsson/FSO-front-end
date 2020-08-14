@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Login from './components/login/Login'
-import Blog from './components/blogs/Blog'
-import AddBlog from './components/blogs/AddBlog'
+import BlogList from './components/blogs/BlogList'
+import AddBlog from './components/blogs/addBlog/AddBlog'
 import Togglable from './components/togglable/Togglable'
 import Notification from './components/notifacations/notification'
 import blogHelper from './utils/blogHelper'
@@ -128,16 +128,12 @@ const App = () => {
         )
       }
       <hr className='margin-bottom'/>
-      {blogs &&
-        blogs.map(blog =>
-        <Blog
-          key={blog.id}
-          blog={blog}
-          user={user ? user.username : ''}
-          deleteBlog={handleDeleteBlog}
-          likeBlog={handleLikeBlog}
-        />
-      )}
+      {blogs && <BlogList
+        blogs={blogs}
+        user={user}
+        handleDeleteBlog={handleDeleteBlog}
+        handleLikeBlog={handleLikeBlog}
+      />}
     </div>
   )
 }
