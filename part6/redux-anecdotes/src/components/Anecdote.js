@@ -3,11 +3,11 @@ import React from 'react'
 const Anecdote = ({ anecdote, vote }) => (
   <div key={anecdote.id}>
     <div>
-        {anecdote.content}
+      {anecdote.content}
     </div>
     <div>
     has {anecdote.votes}
-    <button onClick={() => vote(anecdote.id)}>vote</button>
+      <button onClick={() => vote(anecdote.id, anecdote.content)}>vote</button>
     </div>
   </div>
 )
