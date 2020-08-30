@@ -1,0 +1,42 @@
+.blog {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 2px solid; 
+    border-radius: 5px;
+    width: 30rem;
+}
+
+.blogUrl {
+    width: 26rem;
+    hyphens: none;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.delete {
+    color: white;
+    font-weight: bold;
+    border: 2px solid red;
+    border-radius: 5px;
+    background-color: red;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.view {
+    height: 100%;
+    width: 3rem;
+    padding: 0;
+    margin: 0;
+    border: solid 2px;
+    border-radius: 4px;
+}
+
+.likes {
+    width: fit-content;
+    margin-left: 0.5rem;
+}
