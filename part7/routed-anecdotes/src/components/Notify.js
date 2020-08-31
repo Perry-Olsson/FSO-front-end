@@ -1,9 +1,7 @@
 import React from 'react'
 
-const Notify = ({ notification }) => {
-  return (
-    <h4>{notification}</h4>
-  )
-}
+const Notify = ({ message }) => (
+  <p><b>{message}</b></p>
+)
 
 export default Notify

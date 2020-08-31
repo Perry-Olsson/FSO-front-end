@@ -4,9 +4,9 @@ import Menu from './components/Menu'
 import Notify from './components/Notify'
 import AnecdoteList from './components/AnecdoteList'
 import Anecdote from './components/Anecdote'
-import CreateNew from './components/CreateNew'
 import About from './components/About'
 import Footer from './components/Footer'
+import CreateNew from './components/CreateNew'
 
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
@@ -26,15 +26,15 @@ const App = () => {
     }
   ])
 
-  const [notification, setNotification] = useState(null)
+  const [notification, setNotification] = useState('')
   const [timeoutId, setTimeoutId] = useState(null)
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
     clearTimeout(timeoutId)
-    setNotification(`a new anecdote ${anecdote.content} created!`)
-    setTimeoutId(setTimeout(() => { setNotification(null) }, 10000))
+    setNotification(`new anecdote ${anecdote.content} created!`)
+    setTimeoutId(setTimeout(() => { setNotification(null)}, 10000))
   }
 
   // const anecdoteById = (id) =>
@@ -51,29 +51,31 @@ const App = () => {
   //   setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   // }
 
-  const match = useRouteMatch('/anecdotes/:id')
-  const anecdote = match ? anecdotes.find(anecdote => anecdote.id === match.params.id) : null
+  const match = useRouteMatch('/anecdote/:id')
+  const anecdote = match ?
+    anecdotes.find(anecdote => anecdote.id === match.params.id) :
+    null
 
   return (
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
-      <Notify notification={notification} />
+      <Notify message={notification} />
       <Switch>
-        <Route path='/anecdotes/:id'>
+        <Route path="/anecdote/:id">
           <Anecdote anecdote={anecdote} />
-        </Route>
-        <Route path="/create">
-          <CreateNew addNew={addNew} />
         </Route>
         <Route path="/about">
           <About />
         </Route>
+        <Route path="/create">
+          <CreateNew addNew={addNew} />
+        </Route>
         <Route path="/">
           <AnecdoteList anecdotes={anecdotes} />
         </Route>
+        <Footer />
       </Switch>
-      <Footer />
     </div>
   )
 }

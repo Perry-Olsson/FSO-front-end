@@ -1,46 +1,46 @@
 import React, { useState } from 'react'
+import { useField } from '../hooks'
 import { Redirect } from 'react-router-dom'
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
   const [redirect, setRedirect] = useState(null)
+  const content = useField('text')
+  const author = useField('text')
+  const info = useField('text')
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setRedirect('/')
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0
     })
+    setRedirect('/')
   }
 
-  if (redirect)
-    return <Redirect to={redirect} />
-
-  return (
-    <div>
-      <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+  return redirect ?
+    <Redirect to={redirect} /> :
+    (
+      <div>
+        <h2>create a new anecdote</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
             content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
-        </div>
-        <div>
+            <input {...content} />
+          </div>
+          <div>
             author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
-        </div>
-        <div>
+            <input {...author} />
+          </div>
+          <div>
             url for more info
-          <input name='info' value={info} onChange={(e) => setInfo(e.target.value)} />
-        </div>
-        <button>create</button>
-      </form>
-    </div>
-  )
+            <input {...info} />
+          </div>
+          <button type="submit">create</button><button id="reset" type='reset'>reset</button>
+        </form>
+      </div>
+    )
 
 }
 
