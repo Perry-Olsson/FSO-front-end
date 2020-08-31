@@ -1,28 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { createNotification } from './reducers/notificationReducer'
+import { initializeBlogs, addBlog, likeBlog, deleteBlog } from './reducers/blogReducer'
 import Login from './components/login/Login'
 import BlogList from './components/blogs/BlogList'
 import AddBlog from './components/blogs/addBlog/AddBlog'
 import Togglable from './components/togglable/Togglable'
-import Notification from './components/notifacations/notification'
+import Notification from './components/notifacations/Notification'
 import blogHelper from './utils/blogHelper'
 import loginService from './services/login'
 import blogService from './services/blogs'
 import './App.css'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  const dispatch = useDispatch()
+  const blogs = useSelector(state => state.blogs)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
-  const [notification, setNotification] = useState({ display: false, type: 'success', message: null })
-
   useEffect(() => {
-    blogService.getAll().then(blogs => {
-      if (blogs.length > 0 )
-        setBlogs( blogHelper.mapAndSortBlogs(blogs) )
-    }
-    )
+    dispatch(initializeBlogs())
   }, [])
 
   useEffect(() => {
@@ -55,10 +53,8 @@ const App = () => {
 
   const handleAddBlog = async (newBlog) => {
     try {
-      const addedBlog = await blogService.addBlog(newBlog)
-      const updatedBlogs = blogHelper.mapAndSortBlogs([...blogs, addedBlog])
-      setBlogs(updatedBlogs)
-      handleNotification('success', `${addedBlog.title} by ${addedBlog.author} added`)
+      dispatch(addBlog(newBlog))
+      handleNotification('success', 'blog Added')
       addBlogRef.current.toggleVisibility()
     } catch (exception) {
       exception.response ? handleNotification('failure', exception.response.data.error)
@@ -68,9 +64,7 @@ const App = () => {
 
   const handleLikeBlog = async (blog) => {
     try {
-      const response = await blogService.updateBlog({ ...blog, user: blog.user.id })
-      const updatedBlogs = blogHelper.mapAndSortBlogs(blogs, response.data.id)
-      setBlogs(updatedBlogs)
+      dispatch(likeBlog(blog))
     } catch(exception) {
       exception.response ? handleNotification('failure', exception.response.data.error)
         : console.log(exception)
@@ -80,8 +74,7 @@ const App = () => {
 
   const handleDeleteBlog = async (id) => {
     try {
-      await blogService.deleteBlog(id)
-      setBlogs(blogs.filter(blog => blog.id !== id))
+      dispatch(deleteBlog(id))
       handleNotification('success', 'Blog removed')
     } catch (exception) {
       handleNotification('failure', exception.response.data.error)
@@ -89,8 +82,7 @@ const App = () => {
   }
 
   const handleNotification = (type, message) => {
-    setNotification({ display: true, type, message })
-    setTimeout(() => setNotification({ display: false, message: null }), 5000)
+    dispatch(createNotification({ type, message }, 5))
   }
 
   const handleLogout = () => {
@@ -101,8 +93,7 @@ const App = () => {
   return (
     <div>
       <h1>Blogs</h1>
-      {notification.display && <Notification type={ notification.type } message={ notification.message } />}
-
+      <Notification />
       {user ?
         (
           <>
