@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { likeBlog, deleteBlog } from '../../../reducers/blogReducer'
+import { deleteBlog } from '../../../reducers/blogReducer'
+import { useLikeBlog } from '../../../hooks'
+import { Link } from 'react-router-dom'
 import './Blog.css'
 const Blog = ({
   blog,
@@ -11,10 +13,13 @@ const Blog = ({
   const buttonHeight = { height: show ? '6rem' : '' }
   const buttonLabel = show ? 'hide' : 'view'
 
-  const like = () => {
-    blog.likes++
-    dispatch(likeBlog(blog))
-  }
+  // const like = () => {
+  //   blog.likes++
+  //   dispatch(likeBlog(blog))
+  //   useLikeBlog()
+  // }
+
+  const like = useLikeBlog(blog)
 
   const confirmDeletion = () => {
     if (window.confirm(`delete ${blog.title}?`))
@@ -24,7 +29,7 @@ const Blog = ({
   return (
     <div className={`blog flex ${blog.title.replace(/ /gm, '-')}`}>
       <div className='blogInfoTest'>
-        <p id='blogInfo' style={{ 'fontSize': '1.5rem' }}><b>{blog.title} | {blog.author}</b></p>
+        <p id='blogInfo' style={{ 'fontSize': '1.5rem' }}><Link to={`/blogs/${blog.id}`}>{blog.title} | {blog.author}</Link></p>
         {show && (
           <>
             <p className='likesTest'><b>Likes: </b><span className='likesSelector'>{blog.likes}</span><button className='likes' onClick={like}>like</button></p>

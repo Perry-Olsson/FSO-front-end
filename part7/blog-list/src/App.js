@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
 import { setUser, logoutUser } from './reducers/userReducer'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, useRouteMatch } from 'react-router-dom'
 import NavBar from './components/navbar/NavBar'
 import Login from './components/login/Login'
 import BlogList from './components/blogs/BlogList'
+import BlogPage from './components/blogs/BlogPage'
 import UserPage from './components/users/UserPage'
 import AddBlog from './components/blogs/addBlog/AddBlog'
 import Togglable from './components/togglable/Togglable'
@@ -16,6 +17,11 @@ const App = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const blogs = useSelector(state => state.blogs)
+
+  const match = useRouteMatch('/blogs/:id')
+  const matchedBlog = match
+    ? blogs.find(blog => blog.id === match.params.id)
+    : null
 
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -33,16 +39,14 @@ const App = () => {
   return (
     <div>
       <h1>Blogs</h1>
-      <Notification />
-      {user ?
-        (
+      {user
+        ? (
           <>
-            <NavBar />
-            <h4>{user.username} logged in</h4>
-            <button className='logout' onClick={handleLogout}>logout</button>
+            <NavBar user={user} handleLogout={handleLogout} />
+            <Notification />
           </>
-        ) :
-        (
+        )
+        :(
           <Togglable buttonLabel='Log in' visible={true}>
             <Login />
           </Togglable>
@@ -51,6 +55,9 @@ const App = () => {
       <Switch>
         <Route path='/users'>
           <UserPage />
+        </Route>
+        <Route path='/blogs/:id'>
+          <BlogPage blog={matchedBlog} />
         </Route>
         <Route path='/'>
           {user && (

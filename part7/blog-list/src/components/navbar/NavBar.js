@@ -1,12 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const NavBar = () => {
-  const style = { padding: 2.5 }
+const NavBar = ({ user, handleLogout }) => {
   return (
-    <div>
-      <Link style={style} to='/' >Blogs</Link>
-      <Link style={style} to='/users'>Users</Link>
+    <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'lightgray', padding: '1em', marginBottom: '1em' }}>
+      <div>
+        <Link style={{ paddingRight: '1.5em' }} to='/' >Blogs</Link>
+        <Link to='/users'>Users</Link>
+      </div>
+      <div style={{ display: 'flex' }}>
+        <div style={{ paddingRight: '1em' }}>{user.username} logged in</div>
+        <button className='logout' onClick={handleLogout}>logout</button>
+      </div>
     </div>
   )
 }
