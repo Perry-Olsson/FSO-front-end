@@ -11,9 +11,7 @@ export const useField = (type) => {
   useEffect(() => {
     const button = document.getElementById('reset')
     button.addEventListener('click', onReset)
-
-    return () => button.removeEventListener('click', onReset)
-  })
+  }, [])
 
   return {
     type,
