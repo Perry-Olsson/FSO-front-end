@@ -1,22 +1,50 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addBlog } from '../../../reducers/blogReducer'
+import { createNotification } from '../../../reducers/notificationReducer'
+import blogService from '../../../services/blogs'
 import './AddBlog.css'
 
-const AddBlog = ({ createBlog }) => {
+const AddBlog = ({ toggleVisibility }) => {
+  const dispatch = useDispatch()
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
-  const addBlog = async (event) => {
+  const createBlog = async (event) => {
     event.preventDefault()
-    const newBlog = { title, author, url }
+    const newBlog = await queryDb()
+    if (newBlog) {
+      dispatchAndToggleForm(newBlog)
+    }
+  }
+
+  const queryDb = async () => {
+    try {
+      const newBlog = { title, author, url }
+      return await blogService.addBlog(newBlog)
+    } catch (exception) {
+      exception.response ? dispatch(createNotification({ type: 'failure', message: exception.response.data.error }, 5))
+        : console.log(exception)
+      return null
+    }
+  }
+
+  const dispatchAndToggleForm = (newBlog) => {
+    clearForm()
+    dispatch(addBlog(newBlog))
+    dispatch(createNotification({ type: 'success', message: 'blog added' }, 5))
+    toggleVisibility()
+  }
+
+  const clearForm = () => {
     setTitle('')
     setAuthor('')
     setUrl('')
-    createBlog(newBlog)
   }
 
   return  (
-    <form id='addBlogForm'className='flex-column margin-bottom' onSubmit={addBlog}>
+    <form id='addBlogForm' className='flex-column margin-bottom' onSubmit={createBlog}>
       <h2>Add New Blog</h2>
       <label>title: </label>
       <input

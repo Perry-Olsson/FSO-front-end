@@ -9,4 +9,9 @@ const mapBlogs = (blogs, blog) => blog ?
   blogs.map(b => b.id === blog.id ? blog : b) :
   [...blogs]
 
-export default { mapAndSortBlogs }
+const mapAndSortUsers = (users) => {
+  if(users.length < 2) return [...users]
+  return [...users].sort((a, b) => b.blogs.length - a.blogs.length)
+}
+
+export default { mapAndSortBlogs, mapAndSortUsers }

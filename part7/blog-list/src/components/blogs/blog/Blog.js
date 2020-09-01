@@ -1,23 +1,24 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { likeBlog, deleteBlog } from '../../../reducers/blogReducer'
 import './Blog.css'
 const Blog = ({
   blog,
   user,
-  deleteBlog,
-  likeBlog
 }) => {
+  const dispatch = useDispatch()
   const [show, setShow] = useState(false)
   const buttonHeight = { height: show ? '6rem' : '' }
   const buttonLabel = show ? 'hide' : 'view'
 
   const like = () => {
     blog.likes++
-    likeBlog(blog)
+    dispatch(likeBlog(blog))
   }
 
   const confirmDeletion = () => {
     if (window.confirm(`delete ${blog.title}?`))
-      deleteBlog(blog.id)
+      dispatch(deleteBlog(blog.id))
   }
 
   return (
