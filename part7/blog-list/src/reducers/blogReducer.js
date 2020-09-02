@@ -12,6 +12,8 @@ const blogReducer = (state = [], action) => {
     return blogHelper.mapAndSortBlogs(state, action.updatedBlog)
   case 'DELETE_BLOG':
     return state.filter(blog => blog.id !== action.id)
+  case 'COMMENT':
+    return blogHelper.mapAndSortBlogs(state, action.updatedBlog.data)
   default:
     return state
   }
@@ -60,6 +62,20 @@ export const deleteBlog = (id) => {
       dispatch(createNotification({ type: 'success', message: 'blog removed' }, 5))
     }  catch (exception) {
       dispatch(createNotification({ type: 'failure', message: exception.response.data.error }))
+    }
+  }
+}
+
+export const addComment = (comment) => {
+  return async dispatch => {
+    try {
+      const updatedBlog = await blogService.addComment(comment)
+      dispatch({
+        type: 'COMMENT',
+        updatedBlog
+      })
+    } catch(exception) {
+      console.log(exception)
     }
   }
 }
