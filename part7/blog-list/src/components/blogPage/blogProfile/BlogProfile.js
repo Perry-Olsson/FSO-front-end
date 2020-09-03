@@ -29,7 +29,7 @@ const BlogProfile = ({ blog }) => {
   return (
     <div>
       <h2>{blog.title}</h2>
-      <p><a href='/'>{blog.url}</a></p>
+      <p><a href={blog.url} rel='noopener noreferrer' target='_blank'>{blog.url}</a></p>
       <p>{blog.likes} likes<button style={{ marginLeft: '1em', width: 'fit-content' }} onClick={like} >like</button></p>
       <p>added by <b>{blog.user.username}</b></p>
       {user.username === blog.user.username &&
