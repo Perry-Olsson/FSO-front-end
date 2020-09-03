@@ -13,12 +13,6 @@ const Blog = ({
   const buttonHeight = { height: show ? '6rem' : '' }
   const buttonLabel = show ? 'hide' : 'view'
 
-  // const like = () => {
-  //   blog.likes++
-  //   dispatch(likeBlog(blog))
-  //   useLikeBlog()
-  // }
-
   const like = useLikeBlog(blog)
 
   const confirmDeletion = () => {

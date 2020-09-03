@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useLikeBlog } from '../../hooks'
-import { addComment } from '../../reducers/blogReducer'
+import { addComment, deleteComment } from '../../reducers/blogReducer'
 import AddComment from './AddComment'
 
 const BlogPage = ({ blog }) => {
@@ -17,6 +17,10 @@ const BlogPage = ({ blog }) => {
     dispatch(addComment({ value: comment, blog, user }))
   }
 
+  const del = async (commentId) => {
+    dispatch(deleteComment(blog.id, commentId))
+  }
+
   return (
     <div>
       <h2>{blog.title}</h2>
@@ -29,8 +33,8 @@ const BlogPage = ({ blog }) => {
         <ul>
           {blog.comments.map((comment, i) => (
             <li key={i} >{comment.comment}
-              {user.username === comment.username &&
-              <button style={{ width: 'fit-content', marginLeft: '1em' }}>
+              {user.username === comment.user &&
+              <button onClick={() => del(comment.id)} style={{ width: 'fit-content', marginLeft: '1em' }}>
               delete
               </button>}
             </li>

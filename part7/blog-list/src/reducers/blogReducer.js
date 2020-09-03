@@ -14,6 +14,12 @@ const blogReducer = (state = [], action) => {
     return state.filter(blog => blog.id !== action.id)
   case 'COMMENT':
     return blogHelper.mapAndSortBlogs(state, action.updatedBlog.data)
+  case 'DELETE_COMMENT':
+    return state.map(blog => {
+      if (blog.id === action.blogId)
+        blog.comments = blog.comments.filter(comment => comment.id !== action.commentId)
+      return blog
+    })
   default:
     return state
   }
@@ -73,6 +79,21 @@ export const addComment = (comment) => {
       dispatch({
         type: 'COMMENT',
         updatedBlog
+      })
+    } catch(exception) {
+      console.log(exception)
+    }
+  }
+}
+
+export const deleteComment = (blogId, commentId) => {
+  return async dispatch => {
+    try {
+      await blogService.deleteComment(blogId, commentId)
+      dispatch({
+        type: 'DELETE_COMMENT',
+        blogId,
+        commentId
       })
     } catch(exception) {
       console.log(exception)
