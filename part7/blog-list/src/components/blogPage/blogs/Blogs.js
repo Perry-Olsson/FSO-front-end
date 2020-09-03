@@ -1,7 +1,7 @@
 import React from 'react'
 import Togglable from '../../togglable/Togglable'
 import AddBlog from './addBlog/AddBlog'
-import BlogList from './BlogList'
+import BlogList from './blogList/BlogList'
 
 const Blogs = ({ user, blogs }) => {
   return <div>

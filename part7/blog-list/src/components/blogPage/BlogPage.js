@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Switch, Route, useRouteMatch } from 'react-router-dom'
-import Blogs from './Blogs'
-import BlogProfile from '../blogProfile/BlogProfile'
+import Blogs from './blogs/Blogs'
+import BlogProfile from './blogProfile/BlogProfile'
 
 
 const BlogPage = ({ user }) => {

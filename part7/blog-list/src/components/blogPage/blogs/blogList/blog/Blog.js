@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { deleteBlog } from '../../../reducers/blogReducer'
-import { useLikeBlog } from '../../../hooks'
+import { deleteBlog } from '../../../../../reducers/blogReducer'
+import { useLikeBlog } from '../../../../../hooks'
 import { Link } from 'react-router-dom'
 import './Blog.css'
 const Blog = ({

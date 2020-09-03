@@ -4,7 +4,7 @@ import { initializeBlogs } from './reducers/blogReducer'
 import { setUser } from './reducers/userReducer'
 import { Switch, Route } from 'react-router-dom'
 import Navigation from './components/navigation/Navigation'
-import BlogPage from './components/blogs/blogPage/BlogPage'
+import BlogPage from './components/blogPage/BlogPage'
 import UserPage from './components/users/UserPage'
 import './App.css'
 
