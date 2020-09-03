@@ -1,10 +1,10 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useLikeBlog } from '../../hooks'
-import { addComment, deleteComment } from '../../reducers/blogReducer'
+import { useLikeBlog } from '../../../hooks'
+import { addComment, deleteComment } from '../../../reducers/blogReducer'
 import AddComment from './AddComment'
 
-const BlogPage = ({ blog }) => {
+const BlogProfile = ({ blog }) => {
   const dispatch = useDispatch()
   const like = useLikeBlog(blog)
   const user = useSelector(state => state.user)
@@ -45,4 +45,4 @@ const BlogPage = ({ blog }) => {
   )
 }
 
-export default BlogPage
+export default BlogProfile

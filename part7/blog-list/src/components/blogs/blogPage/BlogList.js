@@ -1,5 +1,5 @@
 import React from 'react'
-import Blog from './blog/Blog'
+import Blog from '../blog/Blog'
 
 const BlogList = ({ blogs, user }) => {
   return (

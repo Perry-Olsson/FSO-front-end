@@ -1,7 +1,15 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { logoutUser } from '../../reducers/userReducer'
 import { Link } from 'react-router-dom'
 
-const NavBar = ({ user, handleLogout }) => {
+const NavBar = ({ user }) => {
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(logoutUser())
+  }
+
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'lightgray', padding: '1em', marginBottom: '1em' }}>
       <div>
