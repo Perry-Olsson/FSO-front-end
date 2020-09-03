@@ -47,9 +47,12 @@ const App = () => {
           </>
         )
         :(
-          <Togglable buttonLabel='Log in' visible={true}>
-            <Login />
-          </Togglable>
+          <>
+            <Notification />
+            <Togglable buttonLabel='Log in' visible={true}>
+              <Login />
+            </Togglable>
+          </>
         )
       }
       <Switch>
