@@ -24,4 +24,11 @@ export const createNotification = (notification, time) => {
   }
 }
 
+export const clearNotification = () => {
+  return async dispatch => {
+    clearTimeout(messageId)
+    dispatch({ type: 'WIPE' })
+  }
+}
+
 export default notificationReducer

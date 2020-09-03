@@ -1,12 +1,14 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { logoutUser } from '../../reducers/userReducer'
+import { clearNotification } from '../../reducers/notificationReducer'
 import { Link } from 'react-router-dom'
 
 const NavBar = ({ user }) => {
   const dispatch = useDispatch()
 
   const handleLogout = () => {
+    dispatch(clearNotification())
     dispatch(logoutUser())
   }
 
