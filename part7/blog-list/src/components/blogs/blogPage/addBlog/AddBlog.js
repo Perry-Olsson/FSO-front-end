@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addBlog } from '../../../reducers/blogReducer'
-import { createNotification } from '../../../reducers/notificationReducer'
-import blogService from '../../../services/blogs'
+import { addBlog } from '../../../../reducers/blogReducer'
+import { createNotification } from '../../../../reducers/notificationReducer'
+import blogService from '../../../../services/blogs'
 import './AddBlog.css'
 
 const AddBlog = ({ toggleVisibility }) => {

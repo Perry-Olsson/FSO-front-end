@@ -1,21 +1,28 @@
 import React from 'react'
-import Togglable from '../../togglable/Togglable'
-import AddBlog from '../addBlog/AddBlog'
-import BlogList from './BlogList'
+import { useSelector } from 'react-redux'
+import { Switch, Route, useRouteMatch } from 'react-router-dom'
+import Blogs from './Blogs'
+import BlogProfile from '../blogProfile/BlogProfile'
 
-const BlogPage = ({ user, blogs }) => {
+
+const BlogPage = ({ user }) => {
+  const blogs = useSelector(state => state.blogs)
+
+  const match = useRouteMatch('/blogs/:id')
+  const matchedBlog = match
+    ? blogs.find(blog => blog.id === match.params.id)
+    : null
+
   return (
-    <div>{user && (
-      <Togglable buttonLabel='New blog' visible={false}>
-        <AddBlog />
-      </Togglable>
-    )}
-    <hr className='margin-bottom'/>
-    {blogs && <BlogList
-      blogs={blogs}
-      user={user}
-    /> }
-    </div>)
+    <Switch>
+      <Route path='/blogs/:id'>
+        <BlogProfile blog={matchedBlog} />
+      </Route>
+      <Route path='/'>
+        <Blogs user={user} blogs={blogs} />
+      </Route>
+
+    </Switch>)
 }
 
 export default BlogPage
