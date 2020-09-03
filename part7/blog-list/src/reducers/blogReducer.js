@@ -1,6 +1,7 @@
 import blogService from '../services/blogs'
 import blogHelper from '../utils/blogHelper'
 import { createNotification } from './notificationReducer'
+import { redirect } from './redirectReducer'
 
 const blogReducer = (state = [], action) => {
   switch(action.type) {
@@ -66,6 +67,7 @@ export const deleteBlog = (id) => {
         id
       })
       dispatch(createNotification({ type: 'success', message: 'blog removed' }, 5))
+      dispatch(redirect('/'))
     }  catch (exception) {
       dispatch(createNotification({ type: 'failure', message: exception.response.data.error }))
     }

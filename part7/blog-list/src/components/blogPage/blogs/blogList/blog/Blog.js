@@ -23,7 +23,7 @@ const Blog = ({
   return (
     <div className={`blog flex ${blog.title.replace(/ /gm, '-')}`}>
       <div className='blogInfoTest'>
-        <p id='blogInfo' style={{ 'fontSize': '1.5rem' }}><Link to={`/blogs/${blog.id}`}>{blog.title} | {blog.author}</Link></p>
+        <p id='blogInfo' style={{ 'fontSize': '1.5rem' }}>{blog.title} | {blog.author}</p>
         {show && (
           <>
             <p className='likesTest'><b>Likes: </b><span className='likesSelector'>{blog.likes}</span><button className='likes' onClick={like}>like</button></p>
@@ -36,7 +36,7 @@ const Blog = ({
         }
       </div>
       <div style={buttonHeight}>
-        <button className='view' onClick={() => setShow(!show)}>{buttonLabel}</button>
+        <Link to={`/blogs/${blog.id}`}><button className='view' onClick={() => setShow(!show)}>{buttonLabel}</button></Link>
       </div>
     </div>
   )}

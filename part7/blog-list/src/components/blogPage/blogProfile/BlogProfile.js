@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useLikeBlog } from '../../../hooks'
-import { addComment, deleteComment } from '../../../reducers/blogReducer'
+import { addComment, deleteComment, deleteBlog } from '../../../reducers/blogReducer'
 import AddComment from './AddComment'
 
 const BlogProfile = ({ blog }) => {
@@ -21,12 +21,20 @@ const BlogProfile = ({ blog }) => {
     dispatch(deleteComment(blog.id, commentId))
   }
 
+  const confirmDeletion = () => {
+    if (window.confirm(`delete ${blog.title}?`))
+      dispatch(deleteBlog(blog.id))
+  }
+
   return (
     <div>
       <h2>{blog.title}</h2>
       <p><a href='/'>{blog.url}</a></p>
       <p>{blog.likes} likes<button style={{ marginLeft: '1em', width: 'fit-content' }} onClick={like} >like</button></p>
       <p>added by <b>{blog.user.username}</b></p>
+      {user.username === blog.user.username &&
+      <button className='delete' onClick={confirmDeletion}>Delete</button>
+      }
       <h4>Comments:</h4>
       <AddComment createComment={createComment}/>
       <div>
