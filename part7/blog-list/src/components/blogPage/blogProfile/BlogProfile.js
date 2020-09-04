@@ -32,7 +32,7 @@ const BlogProfile = ({ blog }) => {
       <p><a href={blog.url} rel='noopener noreferrer' target='_blank'>{blog.url}</a></p>
       <p>{blog.likes} likes<button style={{ marginLeft: '1em', width: 'fit-content' }} onClick={like} >like</button></p>
       <p>added by <b>{blog.user.username}</b></p>
-      {user.username === blog.user.username &&
+      {user && user.username === blog.user.username &&
       <button className='delete' onClick={confirmDeletion}>Delete</button>
       }
       <h4>Comments:</h4>
@@ -41,7 +41,7 @@ const BlogProfile = ({ blog }) => {
         <ul>
           {blog.comments.map((comment, i) => (
             <li key={i} >{comment.comment}
-              {user.username === comment.user &&
+              {user && user.username === comment.user &&
               <button onClick={() => del(comment.id)} style={{ width: 'fit-content', marginLeft: '1em' }}>
               delete
               </button>}

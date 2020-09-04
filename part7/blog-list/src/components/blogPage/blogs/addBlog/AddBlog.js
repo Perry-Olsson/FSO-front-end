@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { addBlog } from '../../../../reducers/blogReducer'
 import { createNotification } from '../../../../reducers/notificationReducer'
 import blogService from '../../../../services/blogs'
+import { Button } from 'react-bootstrap'
 import './AddBlog.css'
 
 const AddBlog = ({ toggleVisibility }) => {
@@ -70,7 +71,7 @@ const AddBlog = ({ toggleVisibility }) => {
         value={url}
         onChange={({ target }) => setUrl(target.value)}
       />
-      <button id='createBlog' type='submit' style={{ 'marginTop': '1rem' }}>create</button>
+      <Button id='createBlog' type='submit' style={{ 'marginTop': '1rem' }} variant="dark">create</Button>
     </form>
   )}
 

@@ -22,8 +22,8 @@ const App = () => {
   }, [dispatch])
 
   return (
-    <div>
-      <h1>Blogs</h1>
+    <div className="container">
+      <h1>Blogbook</h1>
       <Navigation user={user} />
       <Switch>
         <Route path='/users'>
