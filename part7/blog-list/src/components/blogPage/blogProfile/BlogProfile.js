@@ -36,7 +36,7 @@ const BlogProfile = ({ blog }) => {
       <button className='delete' onClick={confirmDeletion}>Delete</button>
       }
       <h4>Comments:</h4>
-      <AddComment createComment={createComment}/>
+      {user && <AddComment createComment={createComment}/>}
       <div>
         <ul>
           {blog.comments.map((comment, i) => (
