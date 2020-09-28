@@ -23,7 +23,7 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1>Blogbook</h1>
+      <h1 className='logo'>Blogbook</h1>
       <Navigation user={user} />
       <Switch>
         <Route path='/users'>

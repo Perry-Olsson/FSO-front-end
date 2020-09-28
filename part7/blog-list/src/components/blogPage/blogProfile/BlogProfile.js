@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useLikeBlog } from '../../../hooks'
 import { addComment, deleteComment, deleteBlog } from '../../../reducers/blogReducer'
 import AddComment from './AddComment'
+import { Button } from 'react-bootstrap'
+import Togglable from '../../togglable/Togglable'
 
 const BlogProfile = ({ blog }) => {
   const dispatch = useDispatch()
@@ -29,15 +31,17 @@ const BlogProfile = ({ blog }) => {
   return (
     <div>
       <h2>{blog.title}</h2>
-      <p><a href={blog.url} rel='noopener noreferrer' target='_blank'>{blog.url}</a></p>
-      <p>{blog.likes} likes<button style={{ marginLeft: '1em', width: 'fit-content' }} onClick={like} >like</button></p>
+      <iframe title={blog.title} src={blog.url} style={{ width: '100%', height: '20em', border: 'solid 2px #444444', borderRadius: '4px' }}/>
+      <div style={{ margin: '1em 0', display: 'flex' }}>
+        <a href={blog.url} rel='noopener noreferrer' target='_blank'><Button variant='outline-dark'>visit page</Button></a>
+        <p><Button variant='outline-info' style={{ margin: '0 1em', width: 'fit-content' }} onClick={like} >like</Button>{blog.likes} likes</p>
+      </div>
       <p>added by <b>{blog.user.username}</b></p>
       {user && user.username === blog.user.username &&
       <button className='delete' onClick={confirmDeletion}>Delete</button>
       }
-      <h4>Comments:</h4>
-      {user && <AddComment createComment={createComment}/>}
       <div>
+        <h4>Comments:</h4>
         <ul>
           {blog.comments.map((comment, i) => (
             <li key={i} >{comment.comment}
@@ -49,6 +53,11 @@ const BlogProfile = ({ blog }) => {
           ))}
         </ul>
       </div>
+      {user && (
+        <Togglable buttonLabel='Comment' visible={false} size='sm'>
+          <AddComment createComment={createComment}/>
+        </Togglable>
+      )}
     </div>
   )
 }

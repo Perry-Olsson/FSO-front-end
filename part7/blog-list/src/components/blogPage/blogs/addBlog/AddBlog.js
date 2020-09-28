@@ -46,7 +46,7 @@ const AddBlog = ({ toggleVisibility }) => {
 
   return  (
     <form id='addBlogForm' className='flex-column margin-bottom' onSubmit={createBlog}>
-      <h2>Add New Blog</h2>
+      <h2 style={{ fontFamily: 'Anton, sans-serif', color: '#333333' }}>New Blog</h2>
       <label>title: </label>
       <input
         id='title'
