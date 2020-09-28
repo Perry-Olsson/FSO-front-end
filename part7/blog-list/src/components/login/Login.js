@@ -1,48 +1,51 @@
-import React, { useState } from 'react'
-import { loginUser } from '../../reducers/userReducer'
-import { useDispatch } from 'react-redux'
-import './Login.css'
+import React, { useState } from 'react';
+import { loginUser } from '../../reducers/userReducer';
+import { useDispatch } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import './Login.css';
 
 const Login = () => {
-  const dispatch = useDispatch()
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    dispatch(loginUser(username, password))
-    setUsername('')
-    setPassword('')
-  }
+  const handleLogin = async event => {
+    event.preventDefault();
+    dispatch(loginUser(username, password));
+    setUsername('');
+    setPassword('');
+  };
 
   return (
-    <div className='loginForm-cy'>
+    <div className="loginForm-cy">
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <div>
           <label>username</label>
           <input
-            id='loginUsername'
-            type='text'
+            id="loginUsername"
+            type="text"
             value={username}
-            name='Username'
+            name="Username"
             onChange={({ target }) => setUsername(target.value)}
           />
         </div>
         <div>
           <label>password</label>
           <input
-            id='loginPassword'
-            type='password'
+            id="loginPassword"
+            type="password"
             value={password}
-            name='Password'
+            name="Password"
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button id='loginButton' className='login' type='submit'>login</button>
+        <Button id="loginButton" className="login" type="submit" variant="dark">
+          login
+        </Button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
