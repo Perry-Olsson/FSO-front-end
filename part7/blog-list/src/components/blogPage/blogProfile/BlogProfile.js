@@ -9,10 +9,11 @@ import {
 import AddComment from './AddComment';
 import { Button } from 'react-bootstrap';
 import Togglable from '../../togglable/Togglable';
+import './blogProfile.css';
+import LikeButton from './LikeButton';
 
 const BlogProfile = ({ blog }) => {
   const dispatch = useDispatch();
-  const like = useLikeBlog(blog);
   const user = useSelector(state => state.user);
 
   if (!blog) return null;
@@ -33,28 +34,13 @@ const BlogProfile = ({ blog }) => {
   return (
     <div style={{ margin: '2em 0' }}>
       <h2>{blog.title}</h2>
-      <iframe
-        title={blog.title}
-        src={blog.url}
-        style={{
-          width: '100%',
-          height: '20em',
-          border: 'solid 2px #444444',
-          borderRadius: '4px',
-        }}
-      />
+      <iframe title={blog.title} src={blog.url} className="embeddedBlog" />
       <div style={{ margin: '1em 0', display: 'flex' }}>
         <a href={blog.url} rel="noopener noreferrer" target="_blank">
           <Button variant="outline-dark">visit page</Button>
         </a>
         <p>
-          <Button
-            variant="outline-info"
-            style={{ margin: '0 1em', width: 'fit-content' }}
-            onClick={like}
-          >
-            like
-          </Button>
+          <LikeButton blog={blog} />
           {blog.likes} likes
         </p>
       </div>
@@ -73,12 +59,13 @@ const BlogProfile = ({ blog }) => {
             <li key={i}>
               {comment.comment}
               {user && user.username === comment.user && (
-                <button
+                <Button
+                  variant="outline-danger"
                   onClick={() => del(comment.id)}
                   style={{ width: 'fit-content', marginLeft: '1em' }}
                 >
                   delete
-                </button>
+                </Button>
               )}
             </li>
           ))}

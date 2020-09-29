@@ -47,6 +47,14 @@ export const loginUser = (username, password) => {
   };
 };
 
+// export const saveLike = () => {
+//   return async dispatch => {
+//     try {
+
+//     }
+//   }
+// }
+
 export const logoutUser = () => {
   window.localStorage.removeItem('loggedUser');
   return {
