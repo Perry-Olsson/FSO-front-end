@@ -1,14 +1,14 @@
 import { useDispatch } from 'react-redux';
-import { likeBlog } from '../reducers/blogReducer';
+import { saveLike } from '../reducers/userReducer';
 
-export const useLikeBlog = blog => {
+export const useLikeBlog = (blog, user) => {
   const dispatch = useDispatch();
 
-  if (!blog) return null;
+  if (!blog || !user) return null;
 
   const like = () => {
     blog.likes++;
-    dispatch(likeBlog(blog));
+    dispatch(saveLike(user, blog));
   };
   return like;
 };

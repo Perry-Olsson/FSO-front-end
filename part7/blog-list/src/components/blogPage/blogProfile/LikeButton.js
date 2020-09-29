@@ -1,13 +1,17 @@
 import React from 'react';
-import { useLikeBlog } from '../../../hooks/index';
+import { useLikeBlog } from '../../../hooks';
 import { Button } from 'react-bootstrap';
 
-const LikeButton = ({ blog }) => {
-  const like = useLikeBlog(blog);
-  return (
+const LikeButton = ({ blog, user }) => {
+  const like = useLikeBlog(blog, user.id);
+  return user.likes[blog.id] ? (
+    <Button variant="info" style={{ margin: '0 1em', width: '3.7em' }}>
+      liked
+    </Button>
+  ) : (
     <Button
       variant="outline-info"
-      style={{ margin: '0 1em', width: 'fit-content' }}
+      style={{ margin: '0 1em', width: '3.7em' }}
       onClick={like}
     >
       like

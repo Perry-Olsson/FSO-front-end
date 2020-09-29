@@ -1,12 +1,16 @@
 import blogService from '../services/blogs';
 import loginService from '../services/login';
+import userService from '../services/users';
 import { createNotification } from './notificationReducer';
+import { likeBlog } from './blogReducer';
 
 const userReducer = (state = null, action) => {
   switch (action.type) {
     case 'LOGIN':
       return action.user;
     case 'SET':
+      return action.user;
+    case 'LIKE':
       return action.user;
     case 'LOGOUT':
       return null;
@@ -47,13 +51,23 @@ export const loginUser = (username, password) => {
   };
 };
 
-// export const saveLike = () => {
-//   return async dispatch => {
-//     try {
-
-//     }
-//   }
-// }
+export const saveLike = (userId, blog) => {
+  return async dispatch => {
+    try {
+      const user = await userService.like(userId, blog.id);
+      dispatch({ type: 'LIKE', user });
+      window.localStorage.setItem('loggedUser', JSON.stringify(user));
+      dispatch(likeBlog(blog));
+    } catch (e) {
+      dispatch(
+        createNotification(
+          { type: 'danger', message: e.response.data.error },
+          5
+        )
+      );
+    }
+  };
+};
 
 export const logoutUser = () => {
   window.localStorage.removeItem('loggedUser');

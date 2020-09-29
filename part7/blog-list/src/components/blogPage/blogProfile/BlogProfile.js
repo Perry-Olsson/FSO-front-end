@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLikeBlog } from '../../../hooks';
 import {
   addComment,
   deleteComment,
@@ -40,7 +39,7 @@ const BlogProfile = ({ blog }) => {
           <Button variant="outline-dark">visit page</Button>
         </a>
         <p>
-          <LikeButton blog={blog} />
+          {user && <LikeButton blog={blog} user={user} />}
           {blog.likes} likes
         </p>
       </div>
