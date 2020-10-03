@@ -31,12 +31,13 @@ export const loginUser = (username, password) => {
   return async dispatch => {
     try {
       const user = await loginService.login({ username, password });
-      window.localStorage.setItem('loggedUser', JSON.stringify(user));
       blogService.setToken(user.token);
       dispatch({
         type: 'LOGIN',
         user,
       });
+      delete user.likes;
+      window.localStorage.setItem('loggedUser', JSON.stringify(user));
       dispatch(
         createNotification({ type: 'success', message: 'login successful' }, 5)
       );
@@ -56,7 +57,6 @@ export const saveLike = (userId, blog) => {
     try {
       const user = await userService.like(userId, blog.id);
       dispatch({ type: 'LIKE', user });
-      window.localStorage.setItem('loggedUser', JSON.stringify(user));
       dispatch(likeBlog(blog));
     } catch (e) {
       dispatch(

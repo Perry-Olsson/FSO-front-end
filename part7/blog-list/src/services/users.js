@@ -11,4 +11,10 @@ const like = async (userId, blogId) => {
   return response.data;
 };
 
-export default { getAll, like };
+const getLikes = async user => {
+  const response = await axios.get(`${baseUrl}/likes/${user.id}`);
+  user.likes = response.data.likes;
+  return user;
+};
+
+export default { getAll, like, getLikes };

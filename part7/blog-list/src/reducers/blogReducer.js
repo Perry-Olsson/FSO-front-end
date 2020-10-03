@@ -101,7 +101,14 @@ export const addComment = comment => {
         updatedBlog,
       });
     } catch (exception) {
-      console.log(exception);
+      exception.response
+        ? dispatch(
+            createNotification(
+              { type: 'danger', message: exception.response.data.error },
+              5
+            )
+          )
+        : console.log(exception);
     }
   };
 };
@@ -116,7 +123,14 @@ export const deleteComment = (blogId, commentId) => {
         commentId,
       });
     } catch (exception) {
-      console.log(exception);
+      exception.response
+        ? dispatch(
+            createNotification(
+              { type: 'danger', message: exception.response.data.error },
+              5
+            )
+          )
+        : console.log(exception);
     }
   };
 };
